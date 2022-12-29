@@ -32,26 +32,11 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        val cadiz = LatLng(36.517676, -6.276978)
-        mMap.addMarker(MarkerOptions()
-            .position(cadiz)
-            .title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(cadiz))
-
+        Functions.initMap(mMap, googleMap)
         enableMyLocation()
-
-        loadCariilBici()
-
-        val aparcabicis = GeoJsonLayer(mMap, R.raw.aparcabicis, this)
-        val styleAparcabicis = aparcabicis.defaultPointStyle
-
-        for (feature in aparcabicis.features) {
-            Log.i("feature", "$feature")
-            styleAparcabicis.title = feature.getProperty("name")
-        }
-
-        aparcabicis.addLayerToMap()
+        Functions.loadCarrilBici(mMap, this)
+        Functions.loadAparcaBicis(mMap, this)
+        Functions.loadFuentes(mMap, this)
     }
 
     private fun isPermissionsGranted() = ContextCompat.checkSelfPermission(
@@ -108,12 +93,4 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
     override fun onMyLocationClick(p0: Location) {
         Toast.makeText(this, "Estás en ${p0.latitude}, ${p0.longitude}", Toast.LENGTH_SHORT).show()
     }
-
-    private fun loadCariilBici(){
-        val carrilBici = GeoJsonLayer(mMap, R.raw.carril_bici, this)
-        val styleCarril = carrilBici.defaultLineStringStyle
-        styleCarril.color = Color.GREEN
-        carrilBici.addLayerToMap()
-    }
-
 }
