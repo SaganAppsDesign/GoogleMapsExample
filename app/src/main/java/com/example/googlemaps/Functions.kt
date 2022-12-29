@@ -41,8 +41,15 @@ object Functions {
     fun loadCarrilBici(mMap:GoogleMap, context: Context){
         val carrilBici = GeoJsonLayer(mMap, R.raw.carril_bici, context)
         val styleCarril = carrilBici.defaultLineStringStyle
-        styleCarril.color = Color.GREEN
+        styleCarril.color = Color.WHITE
+        styleCarril.width = 20F
         carrilBici.addLayerToMap()
+
+        val carrilBici2 = GeoJsonLayer(mMap, R.raw.carril_bici, context)
+        val styleCarril2 = carrilBici2.defaultLineStringStyle
+        styleCarril2.color = Color.GREEN
+        styleCarril2.width = 12F
+        carrilBici2.addLayerToMap()
     }
 
     fun loadAparcaBicis(mMap:GoogleMap, context: Context, binding: ActivityMainBinding){

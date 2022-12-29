@@ -36,8 +36,8 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        Functions.initMap(mMap, googleMap, binding)
         enableMyLocation()
+        Functions.initMap(mMap, googleMap, binding)
         Functions.loadCarrilBici(mMap, this)
         Functions.loadAparcaBicis(mMap, this, binding)
         Functions.loadFuentes(mMap, this, binding)
