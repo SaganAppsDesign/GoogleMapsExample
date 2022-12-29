@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.googlemaps.databinding.ActivityMainBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,10 +22,13 @@ import com.google.maps.android.data.geojson.GeoJsonLayer
 
 internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
     private lateinit var mMap: GoogleMap
+    private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -32,12 +36,12 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        Functions.initMap(mMap, googleMap)
+        Functions.initMap(mMap, googleMap, binding)
         enableMyLocation()
         Functions.loadCarrilBici(mMap, this)
-        Functions.loadAparcaBicis(mMap, this)
-        Functions.loadFuentes(mMap, this)
-    }
+        Functions.loadAparcaBicis(mMap, this, binding)
+        Functions.loadFuentes(mMap, this, binding)
+  }
 
     private fun isPermissionsGranted() = ContextCompat.checkSelfPermission(
         this,
