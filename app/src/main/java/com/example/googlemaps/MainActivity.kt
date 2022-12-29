@@ -41,9 +41,7 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
 
         enableMyLocation()
 
-        val carrilBici = GeoJsonLayer(mMap, R.raw.carril_bici, this)
-        val styleCarril = carrilBici.defaultLineStringStyle
-        styleCarril.color = Color.GREEN
+        loadCariilBici()
 
         val aparcabicis = GeoJsonLayer(mMap, R.raw.aparcabicis, this)
         val styleAparcabicis = aparcabicis.defaultPointStyle
@@ -52,7 +50,7 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
             Log.i("feature", "$feature")
             styleAparcabicis.title = feature.getProperty("name")
         }
-        carrilBici.addLayerToMap()
+
         aparcabicis.addLayerToMap()
     }
 
@@ -109,6 +107,13 @@ internal class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap
 
     override fun onMyLocationClick(p0: Location) {
         Toast.makeText(this, "Estás en ${p0.latitude}, ${p0.longitude}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loadCariilBici(){
+        val carrilBici = GeoJsonLayer(mMap, R.raw.carril_bici, this)
+        val styleCarril = carrilBici.defaultLineStringStyle
+        styleCarril.color = Color.GREEN
+        carrilBici.addLayerToMap()
     }
 
 }
